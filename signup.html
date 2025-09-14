@@ -3,75 +3,103 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>가입 · GG ACADEMY</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<title>회원가입 | GGDEMY</title>
 <style>
-:root{ --maxw: 1200px; --aside-w: 340px; --hero-h: 270px; --ease: cubic-bezier(.2,.8,.2,1); }
-body{ background:#0a0b0e; color:#eaf2ff; font-family: ui-sans-serif, -apple-system, 'Noto Sans KR', Segoe UI, Roboto, Helvetica, Arial; }
-.topbar{ position:sticky; top:0; z-index:50; background:#07090c; border-bottom:1px solid rgba(255,255,255,.08); }
-.topbar .wrap{ max-width:var(--maxw); margin:0 auto; padding:10px 16px; display:flex; align-items:center; gap:16px; }
-.topbar a{ color:#dbeafe; text-decoration:none; opacity:.95; padding:6px 10px; border-radius:10px; }
-.topbar a:hover{ background:rgba(255,255,255,.08); opacity:1; }
-.topbar .brand img{ height:28px; }
-.topbar .spacer{ flex:1; }
-.container{ max-width:var(--maxw); margin:0 auto; padding:18px 16px; }
-.grid-hero{ display:grid; grid-template-columns: 3fr 2fr; gap:16px; margin-bottom:18px; }
-.hero{ background:linear-gradient(180deg,#0a0b0e,#0d1117); border:1px dashed rgba(255,255,255,.15); border-radius:14px; height:var(--hero-h); }
-.card{ background:#0e1116; border:1px solid #1f2937; border-radius:14px; }
-.section-title{ font-weight:800; font-size:18px; margin-bottom:8px; }
-.cat-card{ width:var(--aside-w); }
-.cat-bar{ display:flex; gap:8px; padding:8px 10px; border-bottom:1px solid #1f2937; background:#0e1116; }
-.cat-btn{ padding:4px 10px; border:1px solid #1f2937; border-radius:10px; background:transparent; font-weight:800; color:#cbd5e1; cursor:pointer; font-size:13px; position:relative; }
-.cat-btn:hover{ background:rgba(255,255,255,.04); }
-.cat-btn.active{ border-color:transparent; color:#101827; background:#e5e7eb; }
-/* theme glows */
-.theme-sports .cat-btn[data-cat="스포츠"].active{ color:#021b2c; background:#67e8f9; box-shadow:0 0 10px #22d3ee, 0 0 22px rgba(34,211,238,.6); }
-.theme-casino  .cat-btn[data-cat="카지노"].active{ color:#250027; background:#f0abfc; box-shadow:0 0 10px #e879f9, 0 0 22px rgba(232,121,249,.6); }
-.theme-slots   .cat-btn[data-cat="슬롯"].active{ color:#2a1a00; background:#fde68a; box-shadow:0 0 10px #f59e0b, 0 0 22px rgba(245,158,11,.6); }
-.theme-multi .cat-btn.active{ box-shadow:0 0 10px #22d3ee,0 0 16px #e879f9,0 0 22px #f59e0b; }
-/* themed variables for subbuttons */
-:root{ --acc1:#22d3ee; --acc2:#38bdf8; }
-.theme-sports { --acc1:#22d3ee; --acc2:#38bdf8; }
-.theme-casino  { --acc1:#e879f9; --acc2:#c084fc; }
-.theme-slots   { --acc1:#f59e0b; --acc2:#fbbf24; }
-.theme-multi   { --acc1:#22d3ee; --acc2:#f59e0b; }
-.subcat-wrap{ overflow:hidden; transition:height 800ms var(--ease); height:0px; }
-.menu-list{ padding:10px; }
-/* equal-width subcategory bars */
-.subpill{ width:100%; height:40px; display:flex; align-items:center; justify-content:flex-start;
-  padding:0 14px; margin:8px 0; border-radius:12px; border:1px solid #334155;
-  background:linear-gradient(90deg, rgba(2,6,23,1) 0%, rgba(3,18,37,1) 55%, rgba(7,16,33,1) 100%); color:#e5f0ff;
-  font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  opacity:0; transform:translateY(-6px); transition:opacity .45s, transform .45s; }
-.subpill.show{ opacity:1; transform:translateY(0); }
-.subpill.active{ border-color:var(--acc1); color:#f8fafc; box-shadow: 0 0 8px var(--acc1), 0 0 16px rgba(34,211,238,.35);
-  background:linear-gradient(90deg, rgba(2,6,23,1) 0%, rgba(3,18,37,1) 20%, rgba(7,16,33,1) 55%, var(--acc2) 130%); }
-@keyframes neonBlink3{ 0%,100%{ box-shadow: 0 0 8px var(--acc1), 0 0 16px rgba(34,211,238,.45); opacity:1; }
-  50%{ box-shadow: 0 0 2px rgba(34,211,238,.2), 0 0 6px rgba(34,211,238,.15); opacity:.85; } }
-.subpill.blink{ animation: neonBlink3 3s ease-in-out 1; }
-@media (max-width: 960px){ .grid-hero{ grid-template-columns: 1fr; } }
+  :root { --max:1280px; --gap:24px; --bg:#0b0b0b; --fg:#f4f4f5; --muted:#9aa0a6; --card:#151515; --acc:#e11d48; }
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Malgun Gothic,sans-serif}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:24px}
+  header{position:sticky;top:0;background:rgba(11,11,11,.7);backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid #262626}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;height:56px}
+  .brand{font-weight:700;letter-spacing:.4px}
+  .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:var(--gap);align-items:start;margin-top:28px}
+  @media (max-width:1024px){ .grid{grid-template-columns:1fr} }
+  .card{background:var(--card);border:1px solid #282828;border-radius:16px;padding:24px}
+  h1{margin:0 0 10px;font-size:28px}
+  .muted{color:var(--muted)}
+  form{display:grid;gap:14px}
+  label{font-size:14px;color:#d1d5db}
+  input,select{width:100%;padding:12px 14px;border:1px solid #303030;border-radius:12px;background:#0f0f10;color:var(--fg)}
+  input:focus,select:focus{outline:2px solid #3b82f6;outline-offset:2px;border-color:#3b82f6}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:640px){ .row{grid-template-columns:1fr} }
+  .cta{display:flex;gap:10px;align-items:center}
+  .btn{appearance:none;cursor:pointer;border:0;border-radius:12px;padding:12px 16px;background:var(--acc);color:white;font-weight:700}
+  .btn:disabled{opacity:.6;cursor:not-allowed}
+  .hint{font-size:12px;color:var(--muted)}
+  .bullets{display:grid;gap:12px}
+  .bullet{display:flex;gap:10px}
+  .dot{width:10px;height:10px;border-radius:999px;background:var(--acc);margin-top:8px}
 </style>
 </head>
-<body class=''>
-<header class="topbar">
-  <div class="wrap">
-    <a href="index.html" class="brand"><img src="assets/logo.png" alt="logo"></a>
-    <nav class="flex flex-wrap gap-1">
-      <a href="academy.html">아카데미 소개</a>
-      <a href="index.html#compare">비교검색</a>
-      <a href="promo.html">누구나무료홍보</a>
-      <a href="insurance.html">비교보험</a>
-      <a href="ggin.html">GGin 후기</a>
-      <a href="tiers.html">등급 체계</a>
-      <a href="contact.html">문의</a>
-    </nav>
-    <div class="spacer"></div>
-    <a href="signup.html">가입</a>
-    <a href="login.html">로그인</a>
-  </div>
-</header>
-<main class="container">
-<section class='grid-hero'><div class='hero flex items-center justify-center text-slate-400'>가입 안내</div><div></div></section><div class='card p-4 mb-4'><div class='section-title'>하위분류</div><div class='menu-list'><div class='subpill show'>가입 준비 중</div></div></div>
-</main>
+<body>
+  <header>
+    <div class="wrap bar">
+      <div class="brand">GGDEMY</div>
+      <nav style="display:flex;gap:14px"><a href="/GGDEMY/index.html">홈</a><a href="/GGDEMY/academy.html">아카데미</a><a href="/GGDEMY/login.html">로그인</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <div class="grid">
+      <section class="card" aria-labelledby="signupTitle">
+        <h1 id="signupTitle">회원가입</h1>
+        <p class="muted" style="margin-bottom:10px">폭을 넓혀 폼을 크게 배치했고, 데스크톱에선 2열 레이아웃으로 정보와 혜택을 함께 보여줍니다.</p>
+        <form aria-describedby="signupHint">
+          <div class="row">
+            <div>
+              <label for="name">이름</label>
+              <input id="name" name="name" autocomplete="name" placeholder="홍길동" required>
+            </div>
+            <div>
+              <label for="phone">연락처</label>
+              <input id="phone" name="phone" inputmode="tel" placeholder="010-0000-0000" required>
+            </div>
+          </div>
+          <div>
+            <label for="email">이메일</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+          <div class="row">
+            <div>
+              <label for="password">비밀번호</label>
+              <input id="password" name="password" type="password" autocomplete="new-password" minlength="6" required>
+            </div>
+            <div>
+              <label for="password2">비밀번호 확인</label>
+              <input id="password2" name="password2" type="password" autocomplete="new-password" minlength="6" required>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="country">국가</label>
+              <select id="country" name="country">
+                <option value="KR">대한민국 (KR)</option>
+                <option value="VN">베트남 (VN)</option>
+                <option value="TH">태국 (TH)</option>
+                <option value="PH">필리핀 (PH)</option>
+              </select>
+            </div>
+            <div>
+              <label for="ref">추천/파트너 코드 (선택)</label>
+              <input id="ref" name="ref" placeholder="예: CP10-ABC123">
+            </div>
+          </div>
+          <p id="signupHint" class="hint">회원가입 시 서비스 약관 및 개인정보 처리방침에 동의하게 됩니다.</p>
+          <div class="cta">
+            <button class="btn" type="submit">가입하기</button>
+            <a class="hint" href="/GGDEMY/login.html">이미 계정이 있으신가요? 로그인</a>
+          </div>
+        </form>
+      </section>
+      <aside class="card" aria-label="가입 혜택">
+        <h2 style="margin:0 0 10px;font-size:20px">가입 혜택</h2>
+        <div class="bullets">
+          <div class="bullet"><div class="dot"></div><div><strong>빠른 온보딩</strong><div class="hint">가입 후 즉시 대시보드 접근</div></div></div>
+          <div class="bullet"><div class="dot"></div><div><strong>파트너 코드 정산</strong><div class="hint">코드 입력 시 자동 트래킹·정산</div></div></div>
+          <div class="bullet"><div class="dot"></div><div><strong>보안 우선</strong><div class="hint">비밀번호 가이드·입력 보호</div></div></div>
+        </div>
+      </aside>
+    </div>
+  </main>
 </body>
 </html>
