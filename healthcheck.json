@@ -1,12 +1,1 @@
-/*CODEX_TASK_START*/
-{
-  "repo": "woosus/GGDEMY",
-  "branch": "main",
-  "message": "chore: add pages healthcheck",
-  "files": {
-    "healthcheck.json": {
-      "text": "{\"ok\":true,\"ts\":\"$NOW$\",\"note\":\"pages workflow fixed\"}"
-    }
-  }
-}
-/*CODEX_TASK_END*/
+{"ok":true,"ts":"$NOW$","note":"pages workflow fixed"}
