@@ -1,0 +1,20 @@
+<!doctype html><html lang="ko"><head>
+<meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<title>GGDEMY · Status</title>
+<style>body{font:14px system-ui;margin:24px}pre{background:#f6f8fa;padding:10px;border-radius:8px}</style>
+</head><body>
+<h1>GGDEMY Status</h1>
+<div id="gate">권한이 없습니다</div>
+<script>
+const ok = new URLSearchParams(location.search).get('k') === 'gg';
+if (ok) {
+  fetch('./ops/status.txt?nocache=' + Date.now())
+    .then(r => r.text())
+    .then(t => {
+      document.getElementById('gate').outerHTML =
+        '<pre>' + t.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])) + '</pre>';
+    })
+    .catch(e => { document.getElementById('gate').textContent = 'ERR ' + e; });
+}
+</script>
+</body></html>
