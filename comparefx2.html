@@ -1,120 +1,14 @@
-<!doctype html><html lang="ko"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>GGDEMY · Compare FX v2</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
-<style>
-  body{background:#0b0d10;color:#e7faff}
-  .stage{position:relative;min-height:100vh;display:grid;place-items:center;overflow:hidden;isolation:isolate}
-  .core{position:absolute;width:132px;height:132px;border-radius:999px;
-        background:radial-gradient(circle at 50% 45%,#7ffff3 0%,#00f0ff 38%,#006b86 72%,rgba(0,0,0,.5) 100%);
-        box-shadow:0 0 28px #00e7ff,inset 0 0 18px #bff;cursor:pointer;z-index:20}
-  .ring{position:absolute;inset:0;border:2px solid rgba(0,255,255,.35);border-radius:999px;opacity:0;filter:drop-shadow(0 0 12px rgba(0,255,255,.9))}
-  .puzzle{position:absolute;inset:0;display:grid;place-items:center;z-index:5}
-  .tiles{position:relative;width:min(72vw,760px);height:min(52vw,540px);
-         display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,1fr);gap:6px;filter:drop-shadow(0 0 8px rgba(0,255,255,.25))}
-  .tile{background:linear-gradient(145deg,rgba(0,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(0,255,255,.25);border-radius:10px;box-shadow:inset 0 0 10px rgba(0,255,255,.05)}
-  @keyframes drift{0%{transform:translate(var(--x0),var(--y0)) rotate(var(--r0))}
-    50%{transform:translate(calc(var(--x0)*1.2),calc(var(--y0)*1.2)) rotate(calc(var(--r0)+5deg))}
-    100%{transform:translate(var(--x0),var(--y0)) rotate(var(--r0))}}
-  .tile.idle{animation:drift 6s ease-in-out infinite}
-  .neon{position:absolute;inset:0;display:grid;place-items:center;opacity:0;z-index:8}
-  svg text#word{font:700 120px/1 "Pretendard",system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR",sans-serif;
-    fill:transparent;stroke:#39e9ff;stroke-width:2.6;filter:drop-shadow(0 0 12px rgba(0,255,255,.95)) drop-shadow(0 0 26px rgba(0,199,255,.55));
-    stroke-dasharray:1400;stroke-dashoffset:1400}
-  .chips{position:absolute;inset:0;pointer-events:none;perspective:1000px;z-index:10;opacity:0}
-  .chip{position:absolute;padding:.55rem .85rem;border-radius:999px;border:1px solid rgba(0,255,255,.35);
-        background:rgba(0,255,255,.06);color:#c8feff;backdrop-filter:blur(8px);font-size:.9rem;box-shadow:0 0 18px rgba(0,255,255,.15)}
-  .trail{position:absolute;width:2px;height:2px;background:linear-gradient(to right,rgba(0,255,255,0),rgba(0,255,255,.9),rgba(0,255,255,0));border-radius:2px;filter:blur(2px);opacity:0;z-index:9}
-  .hint{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:#7d8b99;font-size:.9rem;z-index:30}
-  .no-motion *{transition:none!important;animation:none!important}
-</style>
-</head>
-<body class="stage">
-  <div class="puzzle"><div class="tiles" id="tiles"></div></div>
-  <div class="neon" id="neonWrap">
-    <svg viewBox="0 0 900 260" width="min(80vw,840px)" height="auto">
-      <text id="word" x="50%" y="58%" dominant-baseline="middle" text-anchor="middle">비교</text>
-    </svg>
+<!doctype html><html lang='ko'><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width,initial-scale=1'/><title>GGDEMY · Compare FX v2</title><script src='https://cdn.tailwindcss.com'></script></head><body class='bg-zinc-950 text-zinc-100'>
+<header class='sticky top-0 z-50 bg-black/60 backdrop-blur border-b border-white/10'>
+  <div class='max-w-7xl mx-auto flex items-center gap-3 p-3'>
+    <a href='./' class='flex items-center gap-2'>
+      <img src='assets/GGDEMY-logo.svg' alt='GGDEMY' class='h-8 w-auto'/>
+      <span class='sr-only'>GGDEMY</span>
+    </a>
   </div>
-  <div class="chips" id="chips">
-    <span class="chip" data-tx="-260" data-ty="-120" data-rx="8"  data-ry="-10">스포츠</span>
-    <span class="chip" data-tx="280"  data-ty="-80"  data-rx="-6" data-ry="12">카지노</span>
-    <span class="chip" data-tx="-300" data-ty="110"  data-rx="10" data-ry="6">슬롯</span>
-    <span class="chip" data-tx="240"  data-ty="140"  data-rx="-12" data-ry="-6">보험</span>
-    <span class="chip" data-tx="0"    data-ty="-190" data-rx="4"  data-ry="0">후기</span>
-    <span class="chip" data-tx="0"    data-ty="210"  data-rx="-6" data-ry="0">이벤트</span>
-  </div>
-  <button id="core" class="core" aria-label="비교 시작">
-    <span class="ring" id="r1"></span><span class="ring" id="r2"></span><span class="ring" id="r3"></span>
-  </button>
-  <div class="hint">코어 클릭 → 로봇 합체처럼 부드럽게 전개</div>
-
-<script>
-const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(prefersReduced){document.body.classList.add('no-motion')}
-gsap.registerPlugin(MotionPathPlugin);
-
-const core=document.getElementById('core'),
-      tilesEl=document.getElementById('tiles'),
-      neonWrap=document.getElementById('neonWrap'),
-      word=document.getElementById('word'),
-      chips=document.getElementById('chips'),
-      rings=['#r1','#r2','#r3'];
-
-const ROWS=4,COLS=6,tiles=[];
-for(let r=0;r<ROWS;r++){for(let c=0;c<COLS;c++){
-  const d=document.createElement('div');d.className='tile idle';
-  d.style.setProperty('--x0',(Math.random()*2-1)*40+'px');
-  d.style.setProperty('--y0',(Math.random()*2-1)*36+'px');
-  d.style.setProperty('--r0',(Math.random()*2-1)*10+'deg');
-  tilesEl.appendChild(d);tiles.push(d);
-}} 
-
-function pulseRings(){
-  rings.forEach((sel,i)=>{
-    const el=document.querySelector(sel);
-    gsap.set(el,{scale:.4,opacity:0});
-    gsap.to(el,{scale:1.8,opacity:1,duration:.6,delay:i*.08,ease:'power2.out'});
-    gsap.to(el,{opacity:0,duration:.5,delay:.25+i*.08});
-  });
-}
-
-function chipSwoosh(el,delay){
-  const rect=core.getBoundingClientRect();
-  const cx=rect.left+rect.width/2, cy=rect.top+rect.height/2;
-  const tx=Number(el.dataset.tx||0), ty=Number(el.dataset.ty||0);
-  const toX=window.innerWidth/2+tx, toY=window.innerHeight/2+ty;
-  const streak=document.createElement('div');streak.className='trail';document.body.appendChild(streak);
-  gsap.set(streak,{left:cx,top:cy});
-  gsap.set(el,{x:0,y:0,opacity:0,transformOrigin:'50% 50%',rotateX:Number(el.dataset.rx||0),rotateY:Number(el.dataset.ry||0)});
-  const mid={x:(cx+toX)/2+(Math.random()*120-60),y:(cy+toY)/2+(Math.random()*90-45)};
-  gsap.timeline({defaults:{ease:'power2.inOut'}})
-    .to(el,{opacity:1,duration:.12,delay:delay},0)
-    .to(el,{motionPath:{path:[{x:cx,y:cy},{x:mid.x,y:mid.y},{x:toX,y:toY}]},duration:1.05,delay:delay},0)
-    .to(streak,{opacity:1,duration:.1,delay:delay},0)
-    .to(streak,{motionPath:{path:[{x:cx,y:cy},{x:mid.x,y:mid.y},{x:toX,y:toY}]},scaleX:40,scaleY:1,duration:1.05,delay:delay},0)
-    .to(streak,{opacity:0,duration:.25,delay:delay+1.05,onComplete:()=>streak.remove()},0);
-}
-
-const tl=gsap.timeline({paused:true});
-tl.add(()=>pulseRings(),0)
-  .to(core,{scale:1.06,boxShadow:'0 0 34px #00e7ff,inset 0 0 22px #bff',duration:.38,ease:'power2.out'},0)
-  .to(core,{scale:1.0,boxShadow:'0 0 26px #00e7ff,inset 0 0 16px #94fff3',duration:.32,ease:'power2.in'},.38)
-  .add(()=>{tiles.forEach((tile,i)=>{
-      tile.classList.remove('idle');
-      const randOut={x:(Math.random()*2-1)*180,y:(Math.random()*2-1)*140,rotate:(Math.random()*2-1)*18};
-      gsap.fromTo(tile,{x:randOut.x,y:randOut.y,rotate:randOut.rotate,opacity:.35},
-                        {x:0,y:0,rotate:0,opacity:1,duration:1.15,stagger:{each:.018,from:'center'},ease:'power2.inOut'});
-    });},.20)
-  .to(neonWrap,{opacity:1,duration:.25,ease:'sine.out'},.80)
-  .fromTo(word,{strokeDashoffset:1400},{strokeDashoffset:0,duration:1.25,ease:'power2.out'},.85)
-  .add(()=>{gsap.set(chips,{opacity:1});[...document.querySelectorAll('.chip')].forEach((el,idx)=>chipSwoosh(el,idx*.12));},1.05);
-
-core.addEventListener('click',()=>{ if(prefersReduced){
-  document.querySelectorAll('.tile').forEach(t=>{t.classList.remove('idle');t.style.transform='translate(0,0)';});
-  gsap.set(neonWrap,{opacity:1}); gsap.set(word,{strokeDashoffset:0}); gsap.set(chips,{opacity:1}); return;
-} tl.restart();});
-</script>
+</header>
+<main class='max-w-7xl mx-auto p-6'>
+  <h1 class='text-2xl font-semibold mb-4'>비교 페이지(v2)</h1>
+  <p class='opacity-70'>로고가 상단에 적용되었습니다. 필요한 페이지에도 같은 방식으로 확장 가능합니다.</p>
+</main>
 </body></html>
