@@ -25,24 +25,15 @@ input:focus{outline:none;border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,2
 <header class="topbar">
   <div class="wrap">
     <a href="index.html" class="brand"><img src="assets/logo.png" alt="GG ACADEMY" style="height:28px"></a>
-    <nav class="flex flex-wrap gap-1">
-      <a href="academy.html">아카데미 소개</a>
-      <a href="index.html#compare">비교검색</a>
-      <a href="promo.html">누구나무료홍보</a>
-      <a href="insurance.html">비교보험</a>
-      <a href="ggin.html">GGin 후기</a>
-      <a href="tiers.html">등급 체계</a>
-      <a href="contact.html">문의</a>
-    </nav>
     <div class="ml-auto"></div>
-    <a href="login.html">로그인</a>
+    <a href="index.html">홈</a>
   </div>
 </header>
 
 <main class="px-4">
   <div class="card p-6">
     <div class="text-2xl font-extrabold mb-6">회원가입</div>
-    <form id="f" class="space-y-5">
+    <form id="f" class="space-y-5" novalidate>
       <div>
         <label for="uid">아이디</label>
         <input id="uid" name="uid" autocomplete="username" required placeholder="영문/숫자 4~16자" minlength="4" maxlength="16">
@@ -55,8 +46,8 @@ input:focus{outline:none;border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,2
         </div>
       </div>
       <div>
-        <label for="name">성함</label>
-        <input id="name" name="name" required placeholder="홍길동">
+        <label for="realname">성함</label>
+        <input id="realname" name="name" required placeholder="홍길동">
       </div>
       <div>
         <label for="phone">연락처</label>
@@ -67,26 +58,30 @@ input:focus{outline:none;border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,2
         <input id="agree" type="checkbox" required>
         <label for="agree" class="m-0 text-slate-300">(필수) 이용안내 및 쿠폰지급 유의사항에 동의합니다.</label>
       </div>
-      <div class="pt-2 flex items-end gap-3">
-        <button class="btn btn-primary w-full" type="submit"><span class="mr-2">가입하기</span><span class="text-red-400 font-extrabold">(1분승인)</span></button>
+      <div class="pt-2">
+        <button class="btn btn-primary w-full" type="submit" id="submitBtn"><span class="mr-2">가입하기</span><span class="text-red-400 font-extrabold">(1분승인)</span></button>
       </div>
     </form>
   </div>
 </main>
 
 <script>
-const pw=document.getElementById('pw');
-const tog=document.getElementById('t');
+const $=id=>document.getElementById(id);
+const pw=$('pw');
+const tog=$('t');
 tog.addEventListener('click',()=>{ pw.type = (pw.type==='password')?'text':'password'; tog.textContent = (pw.type==='password')?'보기':'숨기기'; });
 
-document.getElementById('f').addEventListener('submit',e=>{
+$('f').addEventListener('submit',e=>{
   e.preventDefault();
-  const data={ uid:uid.value.trim(), name:name.value.trim(), phone:phone.value.trim(), ts:Date.now() };
-  if(!data.uid||!data.name||!data.phone) return;
-  localStorage.setItem('gg_signup', JSON.stringify(data));
-  // 1분승인 느낌: 짧은 로딩 후 이동
-  const next='signup-success.html?name='+encodeURIComponent(data.name);
-  setTimeout(()=>location.href=next, 600);
+  const uidEl=$('uid');
+  const nameEl=$('realname');
+  const phoneEl=$('phone');
+  const btn=$('submitBtn');
+  const data={ uid:(uidEl.value||'').trim(), name:(nameEl.value||'').trim(), phone:(phoneEl.value||'').trim(), ts:Date.now() };
+  if(!data.uid || !data.name || !data.phone){ alert('모든 항목을 입력해주세요.'); return; }
+  try{ localStorage.setItem('gg_signup', JSON.stringify(data)); }catch{}
+  if(btn){ btn.disabled=true; btn.textContent='승인중…'; }
+  setTimeout(()=>{ location.href = 'signup-success.html?name='+encodeURIComponent(data.name); }, 500);
 });
 </script>
 </body>
