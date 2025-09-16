@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>쿠폰 질문지 · GG ACADEMY</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body{background:#0a0b0e;color:#eaf2ff;font-family:ui-sans-serif,-apple-system,'Noto Sans KR',Segoe UI,Roboto,Helvetica,Arial}
+.topbar{position:sticky;top:0;z-index:50;background:#07090c;border-bottom:1px solid rgba(255,255,255,.08)}
+.topbar .wrap{max-width:1200px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center}
+.topbar a{color:#dbeafe;text-decoration:none;opacity:.95;padding:6px 10px;border-radius:10px}
+.topbar a:hover{background:rgba(255,255,255,.08)}
+.card{max-width:720px;margin:24px auto;background:#0e1116;border:1px solid #1f2937;border-radius:16px}
+.q{padding:16px;border-radius:12px;background:#0b1324;border:1px solid #243042}
+label.title{display:block;margin-bottom:10px;color:#c7e1ff;font-weight:800}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 18px;border-radius:12px;font-weight:800}
+.btn-primary{background:#22d3ee;color:#05202a;border:1px solid #0891b2}
+.btn-primary:hover{filter:brightness(1.05)}
+.code{font-family:ui-monospace,Consolas,Menlo,monospace}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a href="index.html" class="brand"><img src="assets/logo.png" alt="GG ACADEMY" style="height:28px"></a>
+    <div class="ml-auto"></div>
+    <a href="index.html">홈</a>
+  </div>
+</header>
+
+<main class="px-4">
+  <div class="card p-6">
+    <div class="text-2xl font-extrabold mb-3">쿠폰을 위한 간단 질문</div>
+    <p class="text-slate-300 mb-6">아래 항목을 선택해 주세요. (1분 소요)</p>
+
+    <form id="qform" class="space-y-5">
+      <div class="q">
+        <label class="title">1) 선호 게임</label>
+        <div class="flex flex-wrap gap-3 text-slate-200">
+          <label><input type="radio" name="game" value="스포츠" required> <span class="ml-1">스포츠</span></label>
+          <label><input type="radio" name="game" value="카지노"> <span class="ml-1">카지노</span></label>
+          <label><input type="radio" name="game" value="슬롯"> <span class="ml-1">슬롯</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="title">2) 이용 스타일</label>
+        <div class="flex flex-wrap gap-3 text-slate-200">
+          <label><input type="radio" name="style" value="안정적"> <span class="ml-1">안정적</span></label>
+          <label><input type="radio" name="style" value="공격적"> <span class="ml-1">공격적</span></label>
+          <label><input type="radio" name="style" value="이벤트 위주"> <span class="ml-1">이벤트 위주</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="title">3) 알림 수신</label>
+        <div class="flex flex-wrap gap-3 text-slate-200">
+          <label><input type="checkbox" name="agreePush" value="Y"> <span class="ml-1">신규 이벤트/쿠폰 소식 알림 동의</span></label>
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button class="btn btn-primary w-full" type="submit">쿠폰 발급 받기</button>
+      </div>
+    </form>
+
+    <div id="result" class="hidden mt-6 p-5 rounded-xl border border-sky-600 bg-sky-900/30">
+      <div class="text-xl font-extrabold mb-1">쿠폰 발급 완료</div>
+      <div class="text-slate-200">쿠폰 코드: <b class="code" id="code"></b></div>
+      <div class="mt-3 flex gap-2">
+        <button id="copy" class="btn bg-slate-700 border border-slate-500">코드 복사</button>
+        <a href="index.html" class="btn bg-green-400 text-black">홈으로</a>
+      </div>
+      <p class="mt-3 text-sm text-slate-300">* 쿠폰은 제휴사 정책에 따라 사용 조건이 있을 수 있습니다.</p>
+    </div>
+  </div>
+</main>
+
+<script>
+function genCode(){ return 'GGA-'+Date.now().toString(36).toUpperCase().slice(-8); }
+
+const form=document.getElementById('qform');
+const box=document.getElementById('result');
+const codeEl=document.getElementById('code');
+const copyBtn=document.getElementById('copy');
+
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const fd=new FormData(form);
+  const payload={game:fd.get('game'),style:fd.get('style'),agreePush:fd.get('agreePush')==='Y'};
+  localStorage.setItem('gg_coupon_answer', JSON.stringify(payload));
+  const code=genCode(); localStorage.setItem('gg_coupon_code', code);
+  codeEl.textContent=code; box.classList.remove('hidden');
+  form.classList.add('hidden');
+});
+
+copyBtn.addEventListener('click',()=>{ const c=codeEl.textContent; navigator.clipboard.writeText(c).then(()=>{ copyBtn.textContent='복사됨'; setTimeout(()=>copyBtn.textContent='코드 복사',1500); }); });
+</script>
+</body>
+</html>
