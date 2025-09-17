@@ -6,7 +6,7 @@
 <title>회원가입 · GG ACADEMY</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-:root{ --maxw: calc(100vw - 60px); }
+:root{ --maxw: calc(100vw - 60px) }
 body{background:#0a0b0e;color:#eaf2ff;font-family:ui-sans-serif,-apple-system,'Noto Sans KR',Segoe UI,Roboto,Helvetica,Arial}
 .topbar{position:sticky;top:0;z-index:50;background:#07090c;border-bottom:1px solid rgba(255,255,255,.08)}
 .topbar .wrap{max-width:var(--maxw);margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center}
@@ -21,6 +21,15 @@ input:focus{outline:none;border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,2
 .btn-primary:hover{background:#1d4ed8}
 .help{color:#94a3b8}
 .badge{display:inline-flex;align-items:center;gap:6px;background:#0b1324;border:1px solid #243042;color:#c7e1ff;border-radius:9999px;padding:4px 10px;font-weight:800}
+/* modal */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,12,.8);z-index:100}
+.modal.show{display:flex}
+.modal-card{max-width:860px;margin:16px;background:#0e1116;border:1px solid #1f2937;border-radius:18px;padding:28px;text-align:center}
+.modal-title{font-weight:900;font-size:26px;margin-bottom:8px}
+.modal-note{color:#cfe8ff;white-space:pre-line}
+.coupon-btn{margin-top:28px}
+.coupon-btn a{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 22px;border-radius:14px;background:#ffd400;color:#111827;font-weight:900;border:1px solid #d8b800}
+.coupon-btn a:hover{filter:brightness(1.05)}
 </style>
 </head>
 <body>
@@ -77,8 +86,48 @@ input:focus{outline:none;border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,2
   </div>
 </main>
 
+<!-- 가입 축하 모달 -->
+<div id="congrats" class="modal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <div class="modal-title">가입축하드립니다.</div>
+    <p class="modal-note text-xl leading-relaxed">
+가입 선물로 쿠폰을 받으실 분께서는\n원하시는 게임의 쿠폰을 받으실 수 있게\n체크 정확히 해주세요\n\n(미기재시 쿠폰지급 거절사유가 될 수 있는 점 유의하세요)
+    </p>
+    <div class="coupon-btn"><a id="goCoupon" href="coupon.html">쿠폰 받기</a></div>
+  </div>
+</div>
+
 <script>
-// (기존 스크립트 동일)
+// PW 보기 토글
+(function(){
+  const pw = document.getElementById('pw');
+  const t = document.getElementById('t');
+  t.addEventListener('click', ()=>{ pw.type = pw.type==='password'?'text':'password'; t.textContent = (pw.type==='password'?'보기':'숨기기'); });
+})();
+
+// 간단한 유효성 검사 후 모달 노출
+(function(){
+  const f = document.getElementById('f');
+  const modal = document.getElementById('congrats');
+  const goCoupon = document.getElementById('goCoupon');
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    const uid = document.getElementById('uid').value.trim();
+    const pw = document.getElementById('pw').value.trim();
+    const name = document.getElementById('realname').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const agree = document.getElementById('agree').checked;
+    if(!uid||pw.length<8||!name||!phone||!agree){
+      alert('필수 항목을 올바르게 입력해 주세요.');
+      return;
+    }
+    // 다음 페이지를 위해 저장
+    try{ localStorage.setItem('gg-user', JSON.stringify({uid,name,phone})); }catch(err){}
+    modal.classList.add('show');
+  });
+  // ESC로 닫기(선택)
+  document.addEventListener('keydown', (ev)=>{ if(ev.key==='Escape') modal.classList.remove('show'); });
+})();
 </script>
 </body>
 </html>
