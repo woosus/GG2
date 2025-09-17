@@ -6,36 +6,43 @@
 <title>회원가입 · GG ACADEMY</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-:root{ --maxw: calc(100vw - 60px); }
 body{background:#0a0b0e;color:#eaf2ff;font-family:ui-sans-serif,-apple-system,'Noto Sans KR',Segoe UI,Roboto,Helvetica,Arial}
 .topbar{position:sticky;top:0;z-index:50;background:#07090c;border-bottom:1px solid rgba(255,255,255,.08)}
-.topbar .wrap{max-width:var(--maxw);margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center}
+.topbar .wrap{max-width:1200px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center}
 .topbar a{color:#dbeafe;text-decoration:none;opacity:.95;padding:6px 10px;border-radius:10px}
 .topbar a:hover{background:rgba(255,255,255,.08)}
-.card{max-width:640px;margin:28px auto;background:#0e1116;border:1px solid #1f2937;border-radius:16px;box-shadow:0 10px 24px rgba(0,0,0,.25)}
-label{display:block;margin-bottom:8px;color:#bfdbfe;font-weight:800}
-input{width:100%;background:#0b0f14;border:1px solid #1f2937;border-radius:12px;padding:24px 14px;color:#e5eefc;font-size:16px}
+.card{max-width:560px;margin:28px auto;background:#0e1116;border:1px solid #1f2937;border-radius:16px;box-shadow:0 10px 24px rgba(0,0,0,.25)}
+label{display:block;margin-bottom:6px;color:#bfdbfe;font-weight:700}
+input{width:100%;background:#0b0f14;border:1px solid #1f2937;border-radius:10px;padding:12px 12px;color:#e5eefc}
 input:focus{outline:none;border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.15)}
-.btn{display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 18px;border-radius:12px;font-weight:800}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 16px;border-radius:12px;font-weight:800}
 .btn-primary{background:#2563eb;border:1px solid #1d4ed8}
 .btn-primary:hover{background:#1d4ed8}
 .help{color:#94a3b8}
-.badge{display:inline-flex;align-items:center;gap:6px;background:#0b1324;border:1px solid #243042;color:#c7e1ff;border-radius:9999px;padding:4px 10px;font-weight:800}
 </style>
 </head>
 <body>
 <header class="topbar">
   <div class="wrap">
     <a href="index.html" class="brand"><img src="assets/logo.png" alt="GG ACADEMY" style="height:28px"></a>
+    <nav class="flex flex-wrap gap-1">
+      <a href="academy.html">아카데미 소개</a>
+      <a href="index.html#compare">비교검색</a>
+      <a href="promo.html">누구나무료홍보</a>
+      <a href="insurance.html">비교보험</a>
+      <a href="ggin.html">GGin 후기</a>
+      <a href="tiers.html">등급 체계</a>
+      <a href="contact.html">문의</a>
+    </nav>
     <div class="ml-auto"></div>
-    <a href="index.html">홈</a>
+    <a href="login.html">로그인</a>
   </div>
 </header>
 
 <main class="px-4">
   <div class="card p-6">
     <div class="text-2xl font-extrabold mb-6">회원가입</div>
-    <form id="f" class="space-y-6" novalidate>
+    <form id="f" class="space-y-5">
       <div>
         <label for="uid">아이디</label>
         <input id="uid" name="uid" autocomplete="username" required placeholder="영문/숫자 4~16자" minlength="4" maxlength="16">
@@ -44,41 +51,43 @@ input:focus{outline:none;border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,2
         <label for="pw">비밀번호</label>
         <div class="relative">
           <input id="pw" name="pw" type="password" autocomplete="new-password" required placeholder="8자 이상" minlength="8">
-          <button type="button" id="t" class="absolute right-3 top-3 text-xs text-sky-300">보기</button>
+          <button type="button" id="t" class="absolute right-2 top-2 text-xs text-sky-300">보기</button>
         </div>
       </div>
       <div>
-        <label for="realname">성함</label>
-        <input id="realname" name="name" required placeholder="홍길동">
+        <label for="name">성함</label>
+        <input id="name" name="name" required placeholder="홍길동">
       </div>
       <div>
         <label for="phone">연락처</label>
-        <div class="flex gap-2 items-stretch">
-          <input id="phone" name="phone" required inputmode="tel" placeholder="010-0000-0000" class="flex-1">
-          <button type="button" id="sendCode" class="btn badge">인증하기</button>
-        </div>
-        <div id="codeRow" class="mt-3 hidden">
-          <div class="flex gap-2 items-stretch">
-            <input id="code" placeholder="인증코드 6자리">
-            <button type="button" id="verify" class="btn btn-primary">코드확인</button>
-          </div>
-          <p id="codeHint" class="help mt-2 text-sm"></p>
-        </div>
-        <p class="help mt-2 text-sm">* 입력정보는 쿠폰 지급 및 고객 확인용으로만 사용됩니다.</p>
+        <input id="phone" name="phone" required inputmode="tel" placeholder="010-0000-0000">
+        <p class="help mt-1 text-sm">* 입력정보는 쿠폰 지급 및 고객 확인용으로만 사용됩니다.</p>
       </div>
       <div class="flex items-center gap-2 text-sm text-slate-300">
         <input id="agree" type="checkbox" required>
         <label for="agree" class="m-0 text-slate-300">(필수) 이용안내 및 쿠폰지급 유의사항에 동의합니다.</label>
       </div>
-      <div class="pt-2">
-        <button class="btn btn-primary w-full" type="submit" id="submitBtn"><span class="mr-2">가입하기</span><span class="text-red-400 font-extrabold">(1분승인)</span></button>
+      <div class="pt-2 flex items-end gap-3">
+        <button class="btn btn-primary w-full" type="submit"><span class="mr-2">가입하기</span><span class="text-red-400 font-extrabold">(1분승인)</span></button>
       </div>
     </form>
   </div>
 </main>
 
 <script>
-// (기존 스크립트 동일)
+const pw=document.getElementById('pw');
+const tog=document.getElementById('t');
+tog.addEventListener('click',()=>{ pw.type = (pw.type==='password')?'text':'password'; tog.textContent = (pw.type==='password')?'보기':'숨기기'; });
+
+document.getElementById('f').addEventListener('submit',e=>{
+  e.preventDefault();
+  const data={ uid:uid.value.trim(), name:name.value.trim(), phone:phone.value.trim(), ts:Date.now() };
+  if(!data.uid||!data.name||!data.phone) return;
+  localStorage.setItem('gg_signup', JSON.stringify(data));
+  // 1분승인 느낌: 짧은 로딩 후 이동
+  const next='signup-success.html?name='+encodeURIComponent(data.name);
+  setTimeout(()=>location.href=next, 600);
+});
 </script>
 </body>
 </html>
