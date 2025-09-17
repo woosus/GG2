@@ -11,13 +11,17 @@ body{background:#0a0b0e;color:#eaf2ff;font-family:ui-sans-serif,-apple-system,'N
 .topbar .wrap{max-width:1200px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center}
 .topbar a{color:#dbeafe;text-decoration:none;opacity:.95;padding:6px 10px;border-radius:10px}
 .topbar a:hover{background:rgba(255,255,255,.08)}
-.card{max-width:720px;margin:24px auto;background:#0e1116;border:1px solid #1f2937;border-radius:16px}
+.card{max-width:840px;margin:24px auto;background:#0e1116;border:1px solid #1f2937;border-radius:16px}
 .q{padding:16px;border-radius:12px;background:#0b1324;border:1px solid #243042}
 label.title{display:block;margin-bottom:10px;color:#c7e1ff;font-weight:800}
 .btn{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 18px;border-radius:12px;font-weight:800}
 .btn-primary{background:#22d3ee;color:#05202a;border:1px solid #0891b2}
 .btn-primary:hover{filter:brightness(1.05)}
 .code{font-family:ui-monospace,Consolas,Menlo,monospace}
+.badge{display:inline-flex;align-items:center;gap:6px;background:#0b1324;border:1px solid #243042;color:#c7e1ff;border-radius:9999px;padding:4px 10px;font-weight:800}
+.choice{cursor:pointer}
+.order-chip{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border-radius:9999px;border:1px solid #7dd3fc;padding:0 6px;font-size:12px;margin-left:6px}
+.help{color:#9fb6d1}
 </style>
 </head>
 <body>
@@ -31,33 +35,95 @@ label.title{display:block;margin-bottom:10px;color:#c7e1ff;font-weight:800}
 
 <main class="px-4">
   <div class="card p-6">
-    <div class="text-2xl font-extrabold mb-3">쿠폰을 위한 간단 질문</div>
-    <p class="text-slate-300 mb-6">아래 항목을 선택해 주세요. (1분 소요)</p>
+    <div class="text-2xl font-extrabold mb-2">쿠폰 발급을 위한 간단 질문</div>
+    <p class="help mb-6">아래 항목을 선택해 주세요. (1분 내외) — 일부 문구는 안내를 위해 요약 반영되었습니다.</p>
 
     <form id="qform" class="space-y-5">
       <div class="q">
-        <label class="title">1) 선호 게임</label>
-        <div class="flex flex-wrap gap-3 text-slate-200">
-          <label><input type="radio" name="game" value="스포츠" required> <span class="ml-1">스포츠</span></label>
-          <label><input type="radio" name="game" value="카지노"> <span class="ml-1">카지노</span></label>
-          <label><input type="radio" name="game" value="슬롯"> <span class="ml-1">슬롯</span></label>
+        <label class="title">1) 선호하시는 게임</label>
+        <div class="flex flex-wrap gap-4 text-slate-200">
+          <label class="choice"><input type="radio" name="game" value="스포츠" required> <span class="ml-1">스포츠</span></label>
+          <label class="choice"><input type="radio" name="game" value="카지노"> <span class="ml-1">카지노</span></label>
+          <label class="choice"><input type="radio" name="game" value="슬롯"> <span class="ml-1">슬롯</span></label>
         </div>
       </div>
 
       <div class="q">
-        <label class="title">2) 이용 스타일</label>
-        <div class="flex flex-wrap gap-3 text-slate-200">
-          <label><input type="radio" name="style" value="안정적"> <span class="ml-1">안정적</span></label>
-          <label><input type="radio" name="style" value="공격적"> <span class="ml-1">공격적</span></label>
-          <label><input type="radio" name="style" value="이벤트 위주"> <span class="ml-1">이벤트 위주</span></label>
+        <label class="title">2) 일주일 평균 이용 횟수</label>
+        <div class="flex flex-wrap gap-4 text-slate-200">
+          <label class="choice"><input type="radio" name="weekly" value="2회"> <span class="ml-1">2회</span></label>
+          <label class="choice"><input type="radio" name="weekly" value="4회 이상"> <span class="ml-1">4회 이상</span></label>
+          <label class="choice"><input type="radio" name="weekly" value="6회 이상"> <span class="ml-1">6회 이상</span></label>
         </div>
       </div>
 
       <div class="q">
-        <label class="title">3) 알림 수신</label>
-        <div class="flex flex-wrap gap-3 text-slate-200">
-          <label><input type="checkbox" name="agreePush" value="Y"> <span class="ml-1">신규 이벤트/쿠폰 소식 알림 동의</span></label>
+        <label class="title">3) 1회 평균 충전금액</label>
+        <div class="flex flex-wrap gap-4 text-slate-200">
+          <label class="choice"><input type="radio" name="avgCharge" value="5만원 이상"> <span class="ml-1">5만원 이상</span></label>
+          <label class="choice"><input type="radio" name="avgCharge" value="10만원 이상"> <span class="ml-1">10만원 이상</span></label>
+          <label class="choice"><input type="radio" name="avgCharge" value="20만원 이상"> <span class="ml-1">20만원 이상</span></label>
         </div>
+      </div>
+
+      <div class="q">
+        <label class="title">4) 최근 한달 내 24시간 기준 가장 많이 충전해 본 횟수</label>
+        <div class="flex flex-wrap gap-4 text-slate-200">
+          <label class="choice"><input type="radio" name="dayMaxCnt" value="4회 이상"> <span class="ml-1">4회 이상</span></label>
+          <label class="choice"><input type="radio" name="dayMaxCnt" value="7회 이상"> <span class="ml-1">7회 이상</span></label>
+          <label class="choice"><input type="radio" name="dayMaxCnt" value="10회 이상"> <span class="ml-1">10회 이상</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="title">5) 최근 한달 내 24시간 기준 1회 충전금액 중 최대</label>
+        <div class="flex flex-wrap gap-4 text-slate-200">
+          <label class="choice"><input type="radio" name="maxCharge" value="10만원 이상"> <span class="ml-1">10만원 이상</span></label>
+          <label class="choice"><input type="radio" name="maxCharge" value="50만원 이상"> <span class="ml-1">50만원 이상</span></label>
+          <label class="choice"><input type="radio" name="maxCharge" value="100만원 이상"> <span class="ml-1">100만원 이상</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="title">6) 쿠폰/이벤트 알림 수신 여부</label>
+        <p class="help mb-2">무료 시작쿠폰, 유/무료 전환 쿠폰, 롤링조건/활동약속/이용감사/환전지원 등 다양한 쿠폰을 한 달간 먼저 안내받아 보실 수 있어요.</p>
+        <div class="flex flex-wrap gap-4 text-slate-200">
+          <label class="choice"><input type="radio" name="notify" value="알림 받겠다"> <span class="ml-1">알림 받겠다</span></label>
+          <label class="choice"><input type="radio" name="notify" value="알림 안 받겠다"> <span class="ml-1">알림 안 받겠다</span></label>
+          <label class="choice"><input type="radio" name="notify" value="쿠폰만 받겠다"> <span class="ml-1">쿠폰만 받겠다</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="title">7) 이틀 내(48시간) 이용 가능 정도</label>
+        <div class="flex flex-wrap gap-4 text-slate-200">
+          <label class="choice"><input type="radio" name="within2d" value="된다"> <span class="ml-1">된다</span></label>
+          <label class="choice"><input type="radio" name="within2d" value="모르겠다"> <span class="ml-1">모르겠다</span></label>
+          <label class="choice"><input type="radio" name="within2d" value="안된다"> <span class="ml-1">안된다</span></label>
+        </div>
+        <div class="flex flex-wrap gap-4 text-slate-200 mt-3">
+          <label class="choice"><input type="radio" name="plan2d" value="있다"> <span class="ml-1">(계획) 있다</span></label>
+          <label class="choice"><input type="radio" name="plan2d" value="없다"> <span class="ml-1">없다</span></label>
+          <label class="choice"><input type="radio" name="plan2d" value="없지만 니하는거봐서"> <span class="ml-1">없지만 니 하는 거 봐서</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="title">8) 최근 7일 내 충전한 업체 수</label>
+        <div class="flex flex-wrap gap-4 text-slate-200">
+          <label class="choice"><input type="radio" name="last7dShops" value="1업체"> <span class="ml-1">1업체</span></label>
+          <label class="choice"><input type="radio" name="last7dShops" value="2업체 이상"> <span class="ml-1">2업체 이상</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="title">9) 플레이 선호 순서 (체크한 순서대로 1·2·3위)</label>
+        <div id="prefWrap" class="flex flex-wrap gap-3 text-slate-200">
+          <label class="choice badge" data-key="스포츠"><input type="checkbox" class="pref" value="스포츠"> <span class="ml-1">스포츠</span> <span class="order-chip" data-chip="스포츠" hidden>1</span></label>
+          <label class="choice badge" data-key="카지노"><input type="checkbox" class="pref" value="카지노"> <span class="ml-1">카지노</span> <span class="order-chip" data-chip="카지노" hidden>1</span></label>
+          <label class="choice badge" data-key="슬롯"><input type="checkbox" class="pref" value="슬롯"> <span class="ml-1">슬롯</span> <span class="order-chip" data-chip="슬롯" hidden>1</span></label>
+        </div>
+        <p class="help mt-2">처음 클릭한 항목이 1위, 다음이 2위, 마지막이 3위로 표시됩니다. 사용하지 않는 게임은 선택하지 마세요.</p>
       </div>
 
       <div class="pt-2">
@@ -79,20 +145,43 @@ label.title{display:block;margin-bottom:10px;color:#c7e1ff;font-weight:800}
 
 <script>
 function genCode(){ return 'GGA-'+Date.now().toString(36).toUpperCase().slice(-8); }
-
 const form=document.getElementById('qform');
 const box=document.getElementById('result');
 const codeEl=document.getElementById('code');
 const copyBtn=document.getElementById('copy');
 
+// 선호 순서 체크: 클릭 순서대로 1,2,3 표시
+const order=[]; const prefs=Array.from(document.querySelectorAll('.pref'));
+function redrawChips(){
+  // 숨기고 재배치
+  document.querySelectorAll('.order-chip').forEach(c=>{ c.hidden=true; });
+  order.forEach((key,idx)=>{ const chip=document.querySelector('[data-chip="'+key+'"]'); if(chip){ chip.textContent=(idx+1)+'위'; chip.hidden=false; } });
+}
+function toggleOrder(key, checked){
+  const i=order.indexOf(key);
+  if(checked){ if(i===-1) order.push(key); }
+  else{ if(i>-1) order.splice(i,1); }
+  if(order.length>3) order.splice(3); // 최대 3개
+  redrawChips();
+}
+
+document.getElementById('prefWrap').addEventListener('change', (e)=>{
+  const target=e.target; if(!target.classList.contains('pref')) return;
+  toggleOrder(target.value, target.checked);
+});
+
 form.addEventListener('submit',e=>{
   e.preventDefault();
   const fd=new FormData(form);
-  const payload={game:fd.get('game'),style:fd.get('style'),agreePush:fd.get('agreePush')==='Y'};
-  localStorage.setItem('gg_coupon_answer', JSON.stringify(payload));
+  const payload={
+    game:fd.get('game'), weekly:fd.get('weekly'), avgCharge:fd.get('avgCharge'),
+    dayMaxCnt:fd.get('dayMaxCnt'), maxCharge:fd.get('maxCharge'), notify:fd.get('notify'),
+    within2d:fd.get('within2d'), plan2d:fd.get('plan2d'), last7dShops:fd.get('last7dShops'),
+    prefOrder:[...order]
+  };
+  try{ localStorage.setItem('gg_coupon_answer', JSON.stringify(payload)); }catch{}
   const code=genCode(); localStorage.setItem('gg_coupon_code', code);
-  codeEl.textContent=code; box.classList.remove('hidden');
-  form.classList.add('hidden');
+  codeEl.textContent=code; box.classList.remove('hidden'); form.classList.add('hidden');
 });
 
 copyBtn.addEventListener('click',()=>{ const c=codeEl.textContent; navigator.clipboard.writeText(c).then(()=>{ copyBtn.textContent='복사됨'; setTimeout(()=>copyBtn.textContent='코드 복사',1500); }); });
