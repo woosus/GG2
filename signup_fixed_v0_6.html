@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>가입 · GG ACADEMY (fixed v0.6)</title>
+<link rel="icon" href="LOGO.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{ --ctrl-h:44px; --wrapW: min(1920px, calc(100vw - 50px)); }
+*{box-sizing:border-box}
+body{ background:#0a0b0e; color:#eaf2ff; font-family: ui-sans-serif,-apple-system,'Noto Sans KR',Segoe UI,Roboto,Helvetica,Arial }
+.wrap{ width:var(--wrapW); margin:0 auto; padding:24px 16px; }
+
+/* === 폼 컨트롤 높이 완전 통일 === */
+input, button, select, textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  line-height: 1;
+}
+.input, .btn { height: var(--ctrl-h); border-radius:10px; box-sizing:border-box; }
+.input{
+  padding:0 12px;
+  background:#0e1116; border:1px solid #334155; color:#eaf2ff; width:100%;
+}
+.btn{
+  display:inline-flex; align-items:center; padding:0 16px;
+  background:#1f2937; border:1px solid #334155; color:#eaf2ff; cursor:pointer;
+}
+.btn:hover{ background:#243045; }
+
+/* 연락처 라인 그룹 */
+.input-group{ display:flex; align-items:stretch; }
+.input-group .input{ flex:1; border-top-right-radius:0;border-bottom-right-radius:0; }
+.input-group .btn{ border-top-left-radius:0;border-bottom-left-radius:0; }
+.help{ color:#94a3b8; font-size:12px; margin-top:6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="text-2xl font-extrabold mb-4">회원 가입</h1>
+  <form id="f" class="grid gap-4 max-w-2xl">
+    <div class="grid md:grid-cols-2 gap-3">
+      <div>
+        <label class="block mb-1 text-sm text-slate-300">아이디</label>
+        <input class="input" name="id" placeholder="영문/숫자 4~16자" required>
+      </div>
+      <div>
+        <label class="block mb-1 text-sm text-slate-300">성함</label>
+        <input class="input" name="name" placeholder="홍길동" required>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-3">
+      <div class="md:col-span-2">
+        <label class="block mb-1 text-sm text-slate-300">비밀번호</label>
+        <!-- NO minlength / pattern / title -->
+        <input class="input" type="password" name="pw" placeholder="비밀번호" required>
+        <!-- 안내문에서 '8자 이상' 문구 제거 -->
+        <div class="help">* 비밀번호는 안전하게 저장되지 않으며, 제출은 예시 동작입니다.</div>
+      </div>
+    </div>
+
+    <div>
+      <label class="block mb-1 text-sm text-slate-300">연락처</label>
+      <div class="input-group">
+        <input class="input" name="phone" placeholder="010-0000-0000" required>
+        <button class="btn" type="button">인증하기</button>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <input id="agree" type="checkbox" required style="width:16px;height:16px;">
+      <label for="agree" class="text-sm text-slate-300">(필수) 이용안내 및 쿠폰지급 유의사항에 동의합니다.</label>
+    </div>
+
+    <div class="flex gap-2">
+      <button class="btn" type="submit">가입하기</button>
+      <a href="index_v0_5.html" class="btn" style="text-decoration:none;display:inline-flex;align-items:center">취소</a>
+    </div>
+
+    <p class="help">* 입력정보는 쿠폰 지급 및 고객 확인용으로만 사용됩니다.</p>
+  </form>
+</div>
+
+<script>
+document.getElementById('f').addEventListener('submit', function(ev){
+  ev.preventDefault();
+  alert('제출되었습니다 (예시 동작).');
+});
+</script>
+</body>
+</html>
