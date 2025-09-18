@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>가입 · GG ACADEMY</title>
+<link rel="icon" href="LOGO.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{ --side:25px; --wrapW: min(1920px, calc(100vw - 50px)); }
+*{box-sizing:border-box}
+body{ background:#0a0b0e; color:#eaf2ff; font-family: ui-sans-serif,-apple-system,'Noto Sans KR',Segoe UI,Roboto,Helvetica,Arial }
+.wrap{ width:var(--wrapW); margin:0 auto; padding:24px 16px; }
+.input{ height:44px; background:#0e1116; border:1px solid #334155; border-radius:10px; padding:0 12px; color:#eaf2ff; width:100%; }
+.input::placeholder{ color:#94a3b8; }
+.btn{ height:44px; padding:0 16px; border-radius:10px; border:1px solid #334155; background:#1f2937; color:#eaf2ff; cursor:pointer; }
+.btn:hover{ background:#243045; }
+.modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.6); z-index:100; }
+.modal .panel{ width:min(680px, 92vw); background:#0e1116; border:1px solid #334155; border-radius:14px; padding:18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="text-2xl font-extrabold mb-4">회원 가입</h1>
+  <form id="f" class="grid gap-3 max-w-2xl">
+    <div class="grid md:grid-cols-2 gap-3">
+      <input class="input" name="id" placeholder="아이디" required>
+      <input class="input" name="name" placeholder="성함" required>
+    </div>
+    <div class="grid md:grid-cols-2 gap-3">
+      <input class="input" type="password" name="pw" placeholder="비밀번호" required>
+      <input class="input" name="phone" placeholder="연락처" required>
+    </div>
+    <div class="flex gap-2">
+      <button class="btn" type="submit">가입하기</button>
+      <a href="index_v0_5.html" class="btn" style="text-decoration:none;display:inline-flex;align-items:center">취소</a>
+    </div>
+    <p class="text-slate-400 text-sm">* 아이디·비밀번호·성함 입력란의 <b>세로 높이를 연락처 입력란과 동일</b>하게 맞췄습니다.</p>
+  </form>
+</div>
+
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="panel">
+    <div class="text-xl font-extrabold mb-2" id="mTitle">가입을 축하드립니다!</div>
+    <p class="text-slate-300 mb-3">현실적인 혜택을 고민하고 찾아드릴 수 있는 곳이 되겠습니다.</p>
+    <p class="text-slate-300 mb-3">“<b>1분 번개 체크</b>”를 작성해 주시면 <b>선호도에 맞게 쿠폰</b>을 받으실 수 있습니다. 원치 않으시는 분은 패스하시면 됩니다. 감사합니다.</p>
+    <div class="flex flex-wrap gap-2 mt-4">
+      <button id="later" class="btn">감사합니다, 다음에</button>
+      <button id="go" class="btn" style="border-color:#0ea5e9;background:#0b2940">참여하고 쿠폰 받기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('f').addEventListener('submit', function(ev){
+  ev.preventDefault();
+  document.getElementById('modal').style.display='flex';
+});
+document.getElementById('later').addEventListener('click', ()=>{
+  document.getElementById('modal').style.display='none';
+});
+document.getElementById('go').addEventListener('click', ()=>{
+  window.open('lightning_v0_5.html', '_blank', 'noopener');
+  document.getElementById('modal').style.display='none';
+});
+</script>
+</body>
+</html>
